@@ -43,6 +43,10 @@
     {
       "name": "Chris McKnight",
       "url": "https://github.com/cmckni3"
+    },
+    {
+      "name": "Prachi Shirish Khadke",
+      "url": "https://github.com/prachikhadke"
     }
   ],
   "license": "MIT",
@@ -51,28 +55,28 @@
   },
   "homepage": "https://github.com/RemyJeancolas/restify-swagger-jsdoc#readme",
   "dependencies": {
-    "mime-types": "^2.1.34",
+    "mime-types": "^2.1.35",
     "restify-errors": "^8.0.2",
-    "swagger-jsdoc": "^3.7.0",
-    "swagger-ui-dist": "^4.10.3"
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-dist": "^4.18.3"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.1",
+    "@types/chai": "^4.3.5",
     "@types/mime-types": "^2.1.1",
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^8.10.66",
-    "@types/restify": "^8.5.4",
-    "@types/restify-errors": "^4.3.4",
-    "@types/sinon": "^4.3.3",
-    "chai": "^4.3.4",
-    "mocha": "^7.2.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.2.3",
+    "@types/restify": "^8.5.7",
+    "@types/restify-errors": "^4.3.5",
+    "@types/sinon": "^10.0.15",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "restify": "^8.6.0",
-    "sinon": "^8.1.1",
-    "ts-node": "^6.2.0",
-    "tslint": "^5.20.1",
-    "tslint-microsoft-contrib": "^5.2.1",
-    "typescript": "^3.9.10"
+    "restify": "^11.1.0",
+    "sinon": "^15.1.0",
+    "ts-node": "^10.9.1",
+    "tslint": "^6.1.3",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "^5.0.4"
   },
   "peerDependencies": {
     "restify": ">=7"

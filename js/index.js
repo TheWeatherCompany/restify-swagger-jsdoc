@@ -9,7 +9,6 @@ const mime_types_1 = require("mime-types");
 const path_1 = __importDefault(require("path"));
 const restify_errors_1 = require("restify-errors");
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
-const jsonFileUrlDefault = 'https://petstore.swagger.io/v2/swagger.json';
 function addSwaggerUiConfig(content, variableName, value) {
     const line = 'layout: "StandaloneLayout"';
     return content.replace(line, `${line},\n${' '.repeat(8)}${variableName}: ${JSON.stringify(value)}`);
@@ -35,7 +34,7 @@ function validateOptions(options) {
     }
 }
 function createSwaggerSpec(options) {
-    const swaggerSpec = swagger_jsdoc_1.default({
+    const swaggerSpec = (0, swagger_jsdoc_1.default)({
         swaggerDefinition: {
             info: {
                 title: options.title,
@@ -67,9 +66,7 @@ function createSwaggerSpec(options) {
 function loadIndexPage(options, req, publicPath, content) {
     const isReqSecure = options.forceSecure || req.isSecure();
     const jsonFileUrl = `${isReqSecure ? 'https' : 'http'}://${req.headers.host}${publicPath}/swagger.json`;
-    let localContent = content.toString().replace(`url: "${jsonFileUrlDefault}"`, `url: "${jsonFileUrl}"`);
-    replaceJsonFileUrl(localContent,jsonFileUrl);
-
+    let localContent = content.toString().replace('url: "https://petstore.swagger.io/v2/swagger.json"', `url: "${jsonFileUrl}"`);
     if (options.validatorUrl === null || typeof options.validatorUrl === 'string') {
         localContent = addSwaggerUiConfig(localContent, 'validatorUrl', options.validatorUrl);
     }
@@ -78,33 +75,8 @@ function loadIndexPage(options, req, publicPath, content) {
     }
     return Buffer.from(localContent);
 }
-function replaceJsonFileUrl(content, jsonFileUrl) {
-    const swaggerUiPath = `${trimTrailingChar(path_1.default.dirname(require.resolve('swagger-ui-dist')), path_1.default.sep)}${path_1.default.sep}`;
-    const listFilesPatch = getListFilesPatch(swaggerUiPath, content);
-    for (let i = 0; i < listFilesPatch.length; i++) {
-        readWriteSync(listFilesPatch[i], jsonFileUrl);
-    }
-}
-function getListFilesPatch(swaggerUiPath, content) {
-    let filePatch = [];
-    var regexScript = /<script[\s\S]*?>[\s\S]*?<\/script>/g;
-    var result = content.match(regexScript) || [];
-    for(let i=0;i < result.length; i++) {
-        const regexSrc = /src=(["\'])(.*?)\1/;
-        const matchSRC = result[i].match(regexSrc) || [];
-        if(matchSRC.length) {
-            filePatch.push(matchSRC[2])
-        }
-    }
-    return filePatch.map( (value) => { return swaggerUiPath+value.replace("./", ""); })
-}
-function readWriteSync(filePath, text) {
-    var content = fs_1.default.readFileSync(filePath, 'utf-8');
-    var newContent = content.replace(jsonFileUrlDefault,text);
-    fs_1.default.writeFileSync(filePath, newContent, 'utf-8');
-}
 function setContentType(file, res) {
-    const contentType = mime_types_1.lookup(file);
+    const contentType = (0, mime_types_1.lookup)(file);
     if (contentType !== false) {
         res.setHeader('Content-Type', contentType);
     }
